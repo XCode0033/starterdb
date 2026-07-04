@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Homepage</title>
+</head>
+<body>
+    <h1>All Dreams</h1>
+
+    <form action="/" method="POST">
+        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="dream_date" placeholder="Date">
+        <input type="text" name="stars" placeholder="Stars">
+        <input type="text" name="description" placeholder="Description">
+        <button type="submit">Create Dream</button>
+    </form>
+    <p><% dreams.forEach(dream => { %>
+        <p><strong>ID: <%= dream.id %></strong></p>
+        <h2><strong>Title: <%= dream.title %></strong></h2>
+        <p>Stars: <%= dream.stars %></p>
+        <p>Date: <%= dream.dream_date %></p>
+        <p>Description: <%= dream.description %></p>
+        <a href="/<%= dream.id %>/editPage">Edit Dream</a>
+        <p>---------------</p>
+        <% }); %></p>
+</body>
+</html>
