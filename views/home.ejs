@@ -8,7 +8,7 @@
 <body>
     <h1>All Dreams</h1>
 
-    <form action="/" method="POST">
+    <form id="createDream" action="/" method="POST">
         <input type="text" name="title" placeholder="Title">
         <input type="text" name="dream_date" placeholder="Date">
         <input type="text" name="stars" placeholder="Stars">
@@ -24,5 +24,34 @@
         <a href="/<%= dream.id %>/editPage">Edit Dream</a>
         <p>---------------</p>
         <% }); %></p>
+
+
+
+        <script>
+            const form = document.getElementById("createDream")
+
+            form.addEventListener(submit, async(event)=> {
+                event.preventDefault
+
+                const formData = new formData(form)
+
+                const createdDream = {
+                    title: formData.get("title"),
+                    stars: formData.get("stars"),
+                    dream_date: formData.get("dream_date"),
+                    description: formData.get("description")
+                }   
+
+                const result = await fetch("/<%= dream.id %>", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.string((createdDream))
+                })
+            })
+
+            
+        </script>
 </body>
 </html>

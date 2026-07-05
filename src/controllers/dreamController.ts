@@ -6,7 +6,7 @@ interface Dream {
     id: number;
     title: string;
     stars: number;
-    date: string;
+    dream_date: string;
     description: string;
 }
 
@@ -75,7 +75,7 @@ export const patchDream = async(req:Request, res:Response, next:NextFunction) =>
         SET title = $1, dream_date = $2, stars = $3, description = $4
         WHERE id = $5
         RETURNING *
-        `, [title, dream_date, stars, description]
+        `, [title, dream_date, stars, description, id]
     )
 
     if(result.rows.length === 0) {

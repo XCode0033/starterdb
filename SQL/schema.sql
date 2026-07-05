@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS dreams;
+
 
 CREATE TABLE dreams (
     id SERIAL PRIMARY KEY,
