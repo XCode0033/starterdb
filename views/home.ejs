@@ -4,53 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream Homepage</title>
+    <style>
+        #deleteBtn {
+            margin-top: 10px;
+        }
+        #top-section {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
     <h1>All Dreams</h1>
+<div id="top-section">
+    <div id="create-section">
+        <h2>Create Dream</h2>
+        <form id="createDream" action="/" method="POST">
+            <input type="text" name="title" placeholder="Title">
+            <input type="text" name="dream_date" placeholder="Date">
+            <input type="text" name="stars" placeholder="Stars">
+            <input type="text" name="description" placeholder="Description">
+            <input type="text" name="tag_name" placeholder="Tag Name">
+            <button type="submit">Create Dream</button>
+        </form>
 
-    <form id="createDream" action="/" method="POST">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="dream_date" placeholder="Date">
-        <input type="text" name="stars" placeholder="Stars">
-        <input type="text" name="description" placeholder="Description">
-        <button type="submit">Create Dream</button>
-    </form>
-    <p><% dreams.forEach(dream => { %>
-        <p><strong>ID: <%= dream.id %></strong></p>
+    </div>
+    <div id="search-section">
+        <h2>Search</h2>
+        <form id="searchForm" action="/" method="GET">
+            <input type="text" name="title" value="<%= filters?.title || ""%>" placeholder="Title">
+            <input type="text" name="dream_date" value="<%= filters?.dream_date || "" %>" placeholder="Date">
+            <input type="text" name="stars" value="<%= filters?.stars || "" %>" placeholder="Stars">
+            <input type="text" name="description" value="<%= filters?.description || "" %>" placeholder="Description">
+            <input type="text" name="tag_name" value="<%= filters?.tag_name || "" %>" placeholder="Tag Name">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<% dreams.forEach(dream => { %>
+        <p><strong>ID: <%= dream.dream_id %></strong></p>
         <h2><strong>Title: <%= dream.title %></strong></h2>
         <p>Stars: <%= dream.stars %></p>
         <p>Date: <%= dream.dream_date %></p>
         <p>Description: <%= dream.description %></p>
-        <a href="/<%= dream.id %>/editPage">Edit Dream</a>
+        <p><strong>Tag: <%= dream.tag_name %></strong></p>
+        <a href="/<%= dream.dream_id %>/editPage">Edit Dream</a>
+        <form class="deleteForms"  data-id="<%= dream.dream_id%>" action="/<%=dream.dream_id%>" method="DELETE">
+            <button id="deleteBtn" type="submit">Delete12</button>
+        </form>
         <p>---------------</p>
-        <% }); %></p>
+        <% }); %>
 
 
-
+<!-- check claude to fix -->
         <script>
-            const form = document.getElementById("createDream")
+            
+            //get form from dom
+            const form = document.getElementById("createDream");
 
-            form.addEventListener(submit, async(event)=> {
-                event.preventDefault
+            form.addEventListener("submit", async(event) => {
+                event.preventDefault;
 
-                const formData = new formData(form)
+                const formData = new FormData(form)
 
                 const createdDream = {
                     title: formData.get("title"),
                     stars: formData.get("stars"),
                     dream_date: formData.get("dream_date"),
-                    description: formData.get("description")
-                }   
+                    description: formData.get("description"),
+                    tag_name: formData.get("tag_name")
+                }
 
-                const result = await fetch("/<%= dream.id %>", {
+                const response = await fetch('/', {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.string((createdDream))
+                        "Content-Type": "application/json"
+                    }
                 })
-            })
 
+                if(response.ok) {
+                    window.location.reload();
+                }
+
+
+            })
+            
+
+            const deleteForms = document.querySelectorAll(".deleteForms");
+
+            deleteForms.forEach(deleteForm => {
+                deleteForm.addEventListener("submit", async(e) => {
+                    e.preventDefault();
+
+                    const form = e.currentTarget;
+                    const id = deleteForm.dataset.id;
+
+                   await fetch(`/${id}`, {
+                        method:"DELETE"
+                    })
+
+                    window.location.reload();
+                })
+            });
+            
             
         </script>
 </body>

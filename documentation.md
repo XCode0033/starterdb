@@ -2,7 +2,7 @@
 
 Created database with 
 
--- Initial Data
+1. -- Initial Data
 CREATE TABLE dreams (
     id SERIAL PRIMARY KEY,
     title VARCHAR(100) DEFAULT 'untitled',
@@ -22,3 +22,13 @@ INSERT INTO dreams (title, dream_date, stars, description) VALUES
 
 -----------------------------------
 
+2. table as of 7/5/ 5:54pm
+CHANGING THE DREAM_DATE TO VARCHAR BECAUSE ITS TOO MUCH EFFORT TO INCLUDE THE TIME IN THE EJS RIGHT NOW.
+
+CREATE TABLE dreams (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) DEFAULT 'untitled',
+    dream_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    stars INT,
+    description TEXT
+);
