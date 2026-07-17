@@ -24,6 +24,10 @@ export const getAllDreams:RequestHandler = async (req, res, next) => {
     const tag_id = req.query.tag_id as string
     const tag_name = req.query.tag_name as string
 
+    //sort
+    const sortBy = (req.query.sortBy as string) || "library_id";
+    const sortDir = (req.query.sortDir as string) || "desc";
+
 
    let sql = 
     `
@@ -57,14 +61,14 @@ export const getAllDreams:RequestHandler = async (req, res, next) => {
         count++
     }
     if(dream_date) {
-        sql += ` AND d.dream_date ILIKE $${count}`;
+        sql += ` AND d.dream_date::text ILIKE $${count}`;
         values.push(`%${dream_date}%`);
         count++
     }
 
     if(stars) {
-        sql += ` AND d.stars ILIKE $${count}`;
-        values.push(`%${stars}%`);
+        sql += ` AND d.stars = $${count}`;
+        values.push(stars);
         count++;
     }
     if(description) {
@@ -84,6 +88,24 @@ export const getAllDreams:RequestHandler = async (req, res, next) => {
         count++;
     }
 
+    const allowedSortFields: Record<string, string> = {
+        dream_id: "d.dream_id",
+        title: "d.title",
+        dream_date: "d.dream_date",
+        stars: "d.stars",
+        tag_name: "t.tag_name",
+        dreamtag_id: "dt.dreamtag_id"
+    }
+
+    const allowedSortDirs = ["asc", "desc"];
+
+    const sortColumn = allowedSortFields[sortBy] || "d.dream_id";
+    const sortDirection = allowedSortDirs.includes(sortDir.toLowerCase())
+        ? sortDir.toUpperCase()
+        : "DESC";
+
+    sql += ` ORDER BY ${sortColumn} ${sortDirection}`;
+
     const result = await pool.query(sql, values)
     res.render("home", {
         dreams: result.rows,
@@ -94,7 +116,10 @@ export const getAllDreams:RequestHandler = async (req, res, next) => {
             stars,
             description,
             tag_id,
-            tag_name
+            tag_name,
+            sortBy,
+            sortDir
+
         }
     })
     

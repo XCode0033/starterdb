@@ -32,3 +32,34 @@ CREATE TABLE dreams (
     stars INT,
     description TEXT
 );
+
+
+# 7/16/26
+## changed id in dreams table to dream_id
+
+
+## completed
+ 1. added searching
+ 2. adding tags
+ 3. allowed multiple tags
+
+ ## To-Do
+ 1. add multiple tag insertion
+~~ 2. sorting~~
+ 3. pagination
+
+
+ # 7/17/26
+
+ ## completed
+ 1. sorting
+ ## To-Do
+ 1. Add multiple tag insertion
+
+# 7/18/26
+## To-Do
+1. pagination
+2. add multiple tag insertion
+
+## completed
+
