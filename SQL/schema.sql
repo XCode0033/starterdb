@@ -24,3 +24,4 @@ CREATE TABLE dream_tags (
     dream_id INT REFERENCES dreams(dream_id),
     tag_id INT REFERENCES tags(tag_id)
 )
+

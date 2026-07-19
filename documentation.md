@@ -45,21 +45,21 @@ CREATE TABLE dreams (
 
  ## To-Do
  1. add multiple tag insertion
-~~ 2. sorting~~
+~~ 2. sorting~~~~
  3. pagination
 
-
+------------
  # 7/17/26
 
  ## completed
  1. sorting
  ## To-Do
  1. Add multiple tag insertion
-
+------------
 # 7/18/26
 ## To-Do
 1. pagination
 2. add multiple tag insertion
-
+--------
 ## completed
 
